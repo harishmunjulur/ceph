@@ -890,11 +890,12 @@ class Orchestrator(object):
         """
         raise NotImplementedError()
 
-    def remove_osds(self, osd_ids, destroy=False):
-        # type: (List[str], bool) -> Completion
+    def remove_osds(self, osd_ids, replace=False, force=False):
+        # type: (List[str], bool, bool) -> Completion
         """
         :param osd_ids: list of OSD IDs
-        :param destroy: marks the OSD as being destroyed. See :ref:`orchestrator-osd-replace`
+        :param replace: marks the OSD as being destroyed. See :ref:`orchestrator-osd-replace`
+        :param force: Forces the OSD removal process without waiting for the data to be drained first.
 
         Note that this can only remove OSDs that were successfully
         created (i.e. got an OSD ID).

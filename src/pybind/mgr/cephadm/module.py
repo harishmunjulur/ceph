@@ -748,7 +748,6 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
 
             # the replace part
             self._remove_osds_bg()
-            self.log.debug("after starting _remove_osds_bg")
             sleep_interval = 600
             self.log.debug('Sleeping for %d seconds', sleep_interval)
             ret = self.event.wait(sleep_interval)
@@ -1554,10 +1553,10 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
     def _remove_osds_bg(self):
         # type: () -> bool
 
-        self.log.debug(f"OSDs that are scheduled for removal: {self.to_remove_osds}")
+        self.log.debug(f"{len(self.to_remove_osds)} OSDs are scheduled for removal: {list(self.to_remove_osds)}")
         remove_osds = self.to_remove_osds.copy()
         for osd in remove_osds:
-            if not osd.destroy_flag:
+            if not osd.force:
                 # skip criteria
                 if not self.is_empty():
                     self.log.info(f"OSD <{osd.osd_id}> is not empty yet. Waiting a bit more")
@@ -1570,11 +1569,16 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
             # abort criteria
             if not self.down_osd([osd.osd_id]):
                 # also remove it from the remove_osd list and set a health_check warning?
-                raise orchestrator.OrchestratorError(f"Couldn't set OSD <{osd.osd_id}> to 'down'")
+                raise orchestrator.OrchestratorError(f"Could not set OSD <{osd.osd_id}> to 'down'")
 
-            if not self.destroy_osd(osd.osd_id):
-                # also remove it from the remove_osd list and set a health_check warning?
-                raise orchestrator.OrchestratorError(f"Couldn't destroy OSD <{osd.osd_id}>")
+            if osd.replace:
+                if not self.destroy_osd(osd.osd_id):
+                    # also remove it from the remove_osd list and set a health_check warning?
+                    raise orchestrator.OrchestratorError(f"Could not destroy OSD <{osd.osd_id}>")
+            else:
+                if not self.purge_osd(osd.osd_id):
+                    # also remove it from the remove_osd list and set a health_check warning?
+                    raise orchestrator.OrchestratorError(f"Could not purge OSD <{osd.osd_id}>")
 
             completion = self._remove_daemon([(osd.fullname, osd.nodename)])
             if completion:
@@ -1585,7 +1589,8 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
                 self.log.debug('services %s' % completion.result)
             else:
                 self.log.error('No completion object from _remove_daemon received')
-                raise orchestrator.OrchestratorError(f"Couldn't remove daemon for OSD <{osd.osd_id}>")
+                raise orchestrator.OrchestratorError(f"Could not remove daemon for OSD <{osd.osd_id}>")
+
             self.log.info(f"Successfully removed removed OSD <{osd.osd_id}> on {osd.nodename}")
             self.log.debug(f"Removing {osd.osd_id} from the queue.")
             self.to_remove_osds.remove(osd)
@@ -1628,8 +1633,8 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
 
     def purge_osd(self, osd_id: List[int]) -> bool:
         cmd_args = {
-            'prefix': 'osd purge',
-            'id': osd_id,
+            'prefix': 'osd purge-actual',
+            'id': int(osd_id),
             'yes_i_really_mean_it': True
         }
         return self._run_mon_cmd(cmd_args)
@@ -1651,19 +1656,20 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
         return True
 
     @with_services('osd')
-    def remove_osds(self, osd_ids, destroy=False, services=[]):
-        # type: (List[str], bool, List[orchestrator.ServiceDescription]) -> AsyncCompletion
+    def remove_osds(self, osd_ids, replace, force, services=[]):
+        # type: (List[str], bool, bool, List[orchestrator.ServiceDescription]) -> AsyncCompletion
 
         # args = [(d.name(), d.nodename) for d in services if d.service_instance in osd_ids]
 
         from collections import namedtuple
-        osd_spec = namedtuple('OSD', ['osd_id', 'destroy_flag', 'nodename', 'fullname'])
+        osd_spec = namedtuple('OSD', ['osd_id', 'replace', 'force', 'nodename', 'fullname'])
 
         found = list()
         for service in services:
             if service.service_instance not in osd_ids:
                 continue
-            found.append(osd_spec(service.service_instance, destroy, service.nodename, service.name()))
+            found.append(osd_spec(service.service_instance, replace, force,
+                                  service.nodename, service.name()))
 
         not_found = {osd_id for osd_id in osd_ids if osd_id not in [x.osd_id for x in found]}
         self.log.error(f"not_found: {not_found}")
