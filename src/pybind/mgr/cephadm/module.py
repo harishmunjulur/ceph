@@ -746,8 +746,6 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
                     orchestrator.raise_if_exception(completion)
                 self.log.debug('did _do_upgrade')
 
-            self._check_for_strays()
-
             # the replace part
             self._remove_osds_bg()
             sleep_interval = 600
