@@ -260,8 +260,12 @@ def with_services(service_type=None,
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             def on_complete(services):
-                kwargs['services'] = services
-                return func(self, *args, **kwargs)
+                if kwargs:
+                    kwargs['services'] = services
+                    return func(self, *args, **kwargs)	
+                else:	
+                    args_ = args + (services,)	
+                    return func(self, *args_, **kwargs)
             return self._get_services(service_type=service_type,
                                       service_name=service_name,
                                       service_id=service_id,
@@ -412,8 +416,6 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
         for h in self.service_cache:
             if h not in self.inventory:
                 del self.service_cache[h]
-        self.run = True
-        self.event = Event()
 
     def shutdown(self):
         self.log.info('shutdown')
@@ -1533,22 +1535,6 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
                     osd_uuid_map=osd_uuid_map)
 
         return "Created osd(s) on host '{}'".format(host)
-
-    def create_osds(self, drive_group):
-        """
-        Create a new osd.
-
-        The orchestrator CLI currently handles a narrow form of drive
-        specification defined by a single block device using bluestore.
-
-        :param drive_group: osd specification
-
-        TODO:
-          - support full drive_group specification
-          - support batch creation
-        """
-
-        return self.get_hosts().then(lambda hosts: self._create_osd(hosts, drive_group))
 
     def _remove_osds_bg(self):
         # type: () -> bool
