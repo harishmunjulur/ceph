@@ -1565,6 +1565,8 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
                     raise orchestrator.OrchestratorError(f"Could not purge OSD <{osd.osd_id}>")
 
             completion = self._remove_daemon([(osd.fullname, osd.nodename)])
+            completion.add_progress('Removing OSDs', self)
+            completion.update_progress = True
             if completion:
                 # so, if this is a asynccompletion.. I probably have to wait for it.. or it needs to be the
                 # last operation? or work with .then.. but it must not be blocking io..
@@ -1664,6 +1666,8 @@ class CephadmOrchestrator(MgrModule, orchestrator.OrchestratorClientMixin):
 
         self.log.info(f"Scheduling OSDs {osd_ids} for removal")
         [self.to_remove_osds.add(x) for x in found]
+        # trigger the serve loop to initiate the removal
+        self._kick_serve_loop()
         return trivial_result(f"Scheduled OSDs {osd_ids} for removal")
 
     def _create_daemon(self, daemon_type, daemon_id, host,
