@@ -2,6 +2,8 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
+sudo pip install nose
+
 if [ -n "${VALGRIND}" ]; then
   valgrind ${VALGRIND} --suppressions=${TESTDIR}/valgrind.supp \
     --errors-for-leak-kinds=definite --error-exitcode=1 \
