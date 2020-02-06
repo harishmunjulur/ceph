@@ -2,7 +2,7 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
-sudo pip install nose
+sudo pip2 install nose
 
 if [ -n "${VALGRIND}" ]; then
   valgrind ${VALGRIND} --suppressions=${TESTDIR}/valgrind.supp \
