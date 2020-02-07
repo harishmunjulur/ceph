@@ -10,6 +10,6 @@ if [ -n "${VALGRIND}" ]; then
     --errors-for-leak-kinds=definite --error-exitcode=1 \
     nosetests -v $relpath/test_rbd.py
 else
-  nosetests -v $relpath/test_rbd.py
+  nose2 -v $relpath/test_rbd.py
 fi
 exit 0
