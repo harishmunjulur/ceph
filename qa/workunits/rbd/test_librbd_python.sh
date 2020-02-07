@@ -2,6 +2,10 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
+python2 --version
+
+pip2 --version
+
 sudo pip2 install nose
 
 if [ -n "${VALGRIND}" ]; then
