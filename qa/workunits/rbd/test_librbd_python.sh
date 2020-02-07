@@ -2,11 +2,8 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
-python2 --version
-
-pip2 --version
-
-sudo pip2 install nose
+source $(dirname $0)/../ceph-helpers-root.sh
+install python3-nose
 
 if [ -n "${VALGRIND}" ]; then
   valgrind ${VALGRIND} --suppressions=${TESTDIR}/valgrind.supp \
