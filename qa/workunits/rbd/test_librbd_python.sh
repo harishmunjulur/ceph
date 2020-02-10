@@ -10,8 +10,8 @@ ls /usr/bin
 if [ -n "${VALGRIND}" ]; then
   valgrind ${VALGRIND} --suppressions=${TESTDIR}/valgrind.supp \
     --errors-for-leak-kinds=definite --error-exitcode=1 \
-   $PATH:/usr/local/bin/nosetests -v $relpath/test_rbd.py
+   nosetests-3 -v $relpath/test_rbd.py
 else
-  $PATH:/usr/local/bin/nosetests -v $relpath/test_rbd.py
+  nosetests-3 -v $relpath/test_rbd.py
 fi
 exit 0
