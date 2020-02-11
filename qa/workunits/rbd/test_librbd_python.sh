@@ -2,6 +2,8 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
+source /etc/os-release
+
 pycmd=$"nosetests"
 
 if [ "$VERSION_ID" == "8.0" ]; then
