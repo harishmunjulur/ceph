@@ -4,10 +4,10 @@ relpath=$(dirname $0)/../../../src/test/pybind
 
 source /etc/os-release
 
-pycmd=$"nosetests"
+pycmd=$"python3 -m nose"
 
-if [ "$VERSION_ID" == "8.0" ]; then
-        pycmd=$"python3 -m nose"
+if [ "$VERSION_ID" == "7.7" && "$ID" == "rhel" ]; then
+        pycmd=$"nosetests"
 fi
 echo "harish"
 echo "$pycmd"
