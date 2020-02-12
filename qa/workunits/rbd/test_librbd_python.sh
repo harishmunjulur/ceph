@@ -6,7 +6,7 @@ source /etc/os-release
 
 pycmd=$"python3 -m nose"
 
-if [ "$VERSION_ID" == "7.7" && "$ID" == "rhel" ]; then
+if [ "$VERSION_ID" == "7.7" ]; then
         pycmd=$"nosetests"
 fi
 echo "harish"
