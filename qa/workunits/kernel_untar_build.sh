@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+sudo yum -y install flex
 set -e
 
 wget -O linux.tar.gz http://download.ceph.com/qa/linux-5.4.tar.gz
