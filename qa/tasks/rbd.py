@@ -69,8 +69,8 @@ def create_image(ctx, config):
                 '-p', 'rbd',
                 'create',
                 '--size', str(size),
-                '--image-feature', 'layering',
                 '--image-format', '2',
+                '--image-feature', 'layering',
                 name,
             ]
         # omit format option if using the default (format 1)
