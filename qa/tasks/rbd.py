@@ -71,6 +71,7 @@ def create_image(ctx, config):
                 '--size', str(size),
                 name,
                 '--image-feature layering',
+                '--image-format 2',
             ]
         # omit format option if using the default (format 1)
         # since old versions of don't support it
@@ -96,6 +97,7 @@ def create_image(ctx, config):
                     'rm',
                     name,
                     '--image-feature layering',
+                    '--image-format 2',
                     ],
                 )
 
