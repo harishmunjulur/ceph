@@ -96,8 +96,8 @@ def create_image(ctx, config):
                     '-p', 'rbd',
                     'rm',
                     name,
-                    '--image-feature layering',
-                    '--image-format 2',
+                    '--image-format', '2',
+                    '--image-feature', 'layering',
                     ],
                 )
 
