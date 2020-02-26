@@ -6,6 +6,7 @@ tasks:
 - ceph:
 - rbd:
     all:
+      image_format: 2
 - workunit:
     clients:
       all:
