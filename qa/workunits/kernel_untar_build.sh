@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 sudo yum -y install flex
 sudo yum -y install bison
-sudo yum install wget make gawk gcc bc libelf-dev xorriso
+sudo yum -y install libelf-dev
+sudo yum -y install libssl-dev
+sudo yum -y install build-essential
 
 set -e
 
