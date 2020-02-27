@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 sudo yum -y install flex
 sudo yum -y install bison
+sudo yum install wget make gawk gcc bc libelf-dev xorriso
 
 set -e
 
