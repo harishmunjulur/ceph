@@ -70,6 +70,9 @@ def create_image(ctx, config):
                 'create',
                 '--size', str(size),
                 name,
+                '--image-format', '2', 
+                '--image-feature', 'layering'
+                '--image-feature', 'exclusive-lock'
             ]
         # omit format option if using the default (format 1)
         # since old versions of don't support it
