@@ -58,7 +58,7 @@ def create_image(ctx, config):
         name = properties.get('image_name', default_image_name(role))
         size = properties.get('image_size', 10240)
         fmt = properties.get('image_format', 1)
-        #features = properties.get('image_features')
+        features = properties.get('image_features')
         (remote,) = ctx.cluster.only(role).remotes.keys()
         log.info('Creating image {name} with size {size}'.format(name=name,
                                                                  size=size))
@@ -75,11 +75,9 @@ def create_image(ctx, config):
         # omit format option if using the default (format 1)
         # since old versions of don't support it
         if int(fmt) != 1:
-            args += ['--image-format', str(fmt)]
-        if config.get('image_features'):
-            features=config['image_features']    
-            for feature in features:
-                args += ['--image-features', feature]
+            args += ['--image-format', str(fmt)] 
+        for feature in features:
+            args += ['--image-features', feature]
         remote.run(args=args)
     try:
         yield
