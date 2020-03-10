@@ -3,6 +3,8 @@ tasks:
 - ceph:
 - rbd:
     all:
+      image_format: 2      
+      image_features: ['layering']      
       image_size: 20480
 - workunit:
     clients:
