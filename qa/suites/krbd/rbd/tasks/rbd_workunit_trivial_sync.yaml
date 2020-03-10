@@ -3,6 +3,8 @@ tasks:
 - ceph:
 - rbd:
     all:
+      image_format: 2      
+      image_features: ['layering', 'journaling']       
 - workunit:
     clients:
       all: [fs/misc/trivial_sync.sh]
