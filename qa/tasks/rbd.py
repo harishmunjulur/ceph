@@ -77,7 +77,7 @@ def create_image(ctx, config):
         if int(fmt) != 1:
             args += ['--image-format', str(fmt)] 
         for feature in features:
-            args += ['--image-features', feature]
+            args += ['--image-feature', feature]
         remote.run(args=args)
     try:
         yield
