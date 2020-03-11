@@ -4,7 +4,7 @@ tasks:
 - rbd:
     all:
       image_format: 2      
-      image_features: ['layering', 'striping']       
+      image_features: ['layering', 'exclusive-lock']       
 - workunit:
     clients:
       all: [fs/misc/trivial_sync.sh]
