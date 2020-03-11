@@ -4,7 +4,7 @@ tasks:
 - rbd:
     all:
       image_format: 2      
-      image_features: ['layering', 'exclusive-lock']       
+      image_features: ['exclusive-lock','object-map']       
 - workunit:
     clients:
       all: [fs/misc/trivial_sync.sh]
