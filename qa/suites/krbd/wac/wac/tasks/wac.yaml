@@ -5,6 +5,8 @@ tasks:
 - rbd:
     all:
       fs_type: ext4
+      image_format: 2
+      image_features: ['layering']
 - workunit:
     clients:
       all:
