@@ -2,6 +2,8 @@ tasks:
 - rbd:
     all:
       image_size: 20480
+      image_format: 2
+      image_features: ['layering']
 - workunit:
     clients:
       all:
