@@ -4,7 +4,7 @@ tasks:
 - rbd:
     all:
       image_format: 2      
-      image_features: ['layering', 'fast-diff']       
+      image_features: ['layering', 'object map', 'fast-diff']       
 - workunit:
     clients:
       all: [fs/misc/trivial_sync.sh]
