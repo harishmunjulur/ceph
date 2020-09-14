@@ -1,0 +1,51 @@
+versions:
+   supported:
+     - '4.0'
+     - '4.1'
+     - '4.2'
+   rpm:
+      mapped:
+         '4.0': '14.2.4'
+         '4.1': '14.2.8'
+         '4.2': '14.2.11'
+   deb:
+      mapped:
+         '4.0': '14.2.4'
+         '4.1': '14.2.8'
+pkgs:
+   rpm:
+    - ceph-mon
+    - ceph-mgr
+    - ceph-osd
+    - ceph-mds
+    - ceph-radosgw
+    - ceph-test
+    - ceph-selinux
+    - ceph-fuse
+    - python-rados
+    - python-rbd
+    - python-cephfs
+    - rbd-mirror
+   deb:
+    - ceph-mon
+    - ceph-mgr
+    - ceph-osd
+    - ceph-mds
+    - ceph-test
+    - ceph-fuse
+    - radosgw
+    - python-rados
+    - python-rbd
+    - python-cephfs
+    - rbd-mirror
+
+rhel_repos:
+  '7':
+    - rhel-7-server-rpms
+    - rhel-7-server-optional-rpms
+    - rhel-7-server-extras-rpms
+    - rhel-7-server-ansible-2.8-rpms
+  '8':
+    - rhel-8-for-x86_64-appstream-rpms
+    - rhel-8-for-x86_64-baseos-rpms
+    - ansible-2.8-for-rhel-8-x86_64-rpms
