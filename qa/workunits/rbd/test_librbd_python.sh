@@ -2,7 +2,6 @@
 
 relpath=$(dirname $0)/../../../src/test/pybind
 
-ceph osd pool create rbd 32 32
 
 if [ -n "${VALGRIND}" ]; then
   valgrind ${VALGRIND} --suppressions=${TESTDIR}/valgrind.supp \
