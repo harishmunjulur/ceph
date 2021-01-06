@@ -7,6 +7,7 @@ LOCKID=rbdrw
 RELPATH=$(dirname $0)/../../../src/test/librbd
 RBDRW=$RELPATH/rbdrw.py
 
+ceph osd pool create rbd 32 32 
 rbd create $IMAGE --size 10 --image-format 2 --image-shared || exit 1
 
 # rbdrw loops doing I/O to $IMAGE after locking with lockid $LOCKID
