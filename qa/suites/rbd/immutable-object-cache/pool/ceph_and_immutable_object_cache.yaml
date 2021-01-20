@@ -1,7 +1,7 @@
 tasks:
 - install:
     extra_packages: ['ceph-immutable-object-cache']
-- ceph:
+- cephadm:
     conf:
       client:
         rbd parent cache enabled: true
