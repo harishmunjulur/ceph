@@ -10,3 +10,6 @@ tasks:
         immutable_object_cache_max_size: 10G
 - immutable_object_cache:
     client.0:
+overrides:
+  ceph:
+    create_rbd_pool: true     
