@@ -1,3 +1,6 @@
+overrides:
+  ceph:
+    create_rbd_pool: true      
 tasks:
 - parallel:
     - io_workload
