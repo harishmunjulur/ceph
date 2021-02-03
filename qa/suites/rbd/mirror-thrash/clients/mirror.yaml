@@ -2,6 +2,7 @@ meta:
 - desc: configure the permissions for client.mirror
 overrides:
   ceph:
+    create_rbd_pool: true      
     conf:
       client:
         rbd default features: 125
