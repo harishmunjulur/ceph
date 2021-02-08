@@ -2,3 +2,6 @@ openstack:
   - volumes: # attached to each instance
       count: 2
       size: 30 # GB
+overrides:
+  ceph:
+    create_rbd_pool: true 
