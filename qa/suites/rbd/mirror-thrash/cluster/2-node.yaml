@@ -7,12 +7,6 @@ roles:
   - cluster1.osd.1
   - cluster1.osd.2
   - cluster1.client.0
-  - cluster2.client.0
-- - cluster2.mon.a
-  - cluster2.mgr.x
-  - cluster2.osd.0
-  - cluster2.osd.1
-  - cluster2.osd.2
   - cluster1.client.mirror
   - cluster1.client.mirror.0
   - cluster1.client.mirror.1
@@ -21,6 +15,12 @@ roles:
   - cluster1.client.mirror.4
   - cluster1.client.mirror.5
   - cluster1.client.mirror.6
+- - cluster2.mon.a
+  - cluster2.mgr.x
+  - cluster2.osd.0
+  - cluster2.osd.1
+  - cluster2.osd.2
+  - cluster2.client.0
   - cluster2.client.mirror
   - cluster2.client.mirror.0
   - cluster2.client.mirror.1
