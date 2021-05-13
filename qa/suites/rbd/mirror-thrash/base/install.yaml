@@ -7,6 +7,3 @@ tasks:
     cluster: cluster1
 - cephadm:
     cluster: cluster2
-overrides:
-  ceph:
-    create_rbd_pool: true 
